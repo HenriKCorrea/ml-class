@@ -1,0 +1,3 @@
+- [Machine Learning with Python and Scikit-Learn – Full Course freeCodeCamp.org (em inglês)](https://www.youtube.com/watch?v=hDKCxebp88A)
+- [Kaggle Learn - Python (basics) and Machine Learning (em inglês)](https://www.kaggle.com/learn)
+- [Capítulo: “A Nova Eletricidade”: Aplicações, Riscos e Tendências da IA Moderna, Bazzan et al. (2023)](https://moodle.ufrgs.br/mod/url/view.php?id=5659908)
