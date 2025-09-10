@@ -1,0 +1,6 @@
+[videos] Avaliação de modelos preditivos - estratégias de divisão de dados: https://youtube.com/playlist?list=PL2t5OdGxbjUPIn7IegK9Z--HLsuiBiwGy
+
+StatQuest - ROC and AUC, Clearly Explained! - https://youtu.be/4jRBRDbJemM?si=LxZwgl-Hd62ijMTA
+
+A gentle introduction to nested cross-validation - https://ploomber.io/blog/nested-cv/
+
