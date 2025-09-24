@@ -3,6 +3,9 @@ FROM mcr.microsoft.com/devcontainers/miniconda:1-3
 ARG ENV_NAME=base
 ARG USER_NAME=vscode
 
+# Set system wide environment variables
+ENV CONDA_ROOT="/opt/conda"
+
 # Install git-lfs (needed for some repos, e.g. huggingface)
 RUN apt-get update && \
     apt-get install -y git-lfs && \
@@ -15,8 +18,8 @@ RUN apt-get update && \
 COPY environment.yml* .devcontainer/noop.txt /tmp/conda-tmp/
 RUN if [ -f "/tmp/conda-tmp/environment.yml" ]; then \
         umask 0002 && \
-        /opt/conda/bin/conda env create -y -n ${ENV_NAME} -f /tmp/conda-tmp/environment.yml && \
-        /opt/conda/bin/conda clean -afy; \
+        $CONDA_ROOT/bin/conda env create -y -n ${ENV_NAME} -f /tmp/conda-tmp/environment.yml && \
+        $CONDA_ROOT/bin/conda clean -afy; \
     else \
         echo "No environment.yml found, skipping conda environment creation"; \
     fi \
@@ -24,12 +27,15 @@ RUN if [ -f "/tmp/conda-tmp/environment.yml" ]; then \
 
 USER $USER_NAME
 
-# Update PATH environment variable
-ENV PATH="/opt/conda/envs/$ENV_NAME/bin:/opt/conda/bin:$PATH"
+# Set user environment variables
+ENV PATH="$CONDA_ROOT/envs/$ENV_NAME/bin:$CONDA_ROOT/bin:$PATH"
 
 # Activate conda environment by default
-RUN echo "source /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
-    echo "conda activate $ENV_NAME" >> ~/.bashrc
+# RUN echo "source $CONDA_ROOT/etc/profile.d/conda.sh" >> /home/$USER_NAME/.bashrc
+RUN echo "source $CONDA_ROOT/etc/profile.d/conda.sh" >> /home/$USER_NAME/.bashrc && \
+    echo "conda activate ${ENV_NAME}" >> /home/$USER_NAME/.bashrc && \
+    echo "auto_activate: true" >> /home/$USER_NAME/.condarc && \
+    echo "default_activation_env: ${ENV_NAME}" >> /home/$USER_NAME/.condarc
 
 # [Optional] Uncomment to install a different version of Python than the default
 # RUN conda install -y python=3.6 \
