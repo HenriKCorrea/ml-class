@@ -1,4 +1,4 @@
-name: am-tp
+name: ml-class
 channels:
   - defaults
 dependencies:
