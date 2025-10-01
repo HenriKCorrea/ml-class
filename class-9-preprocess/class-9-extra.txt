@@ -1,0 +1,2 @@
+[videos] Pré-processamento de dados I + PCA: https://www.youtube.com/playlist?list=PL2t5OdGxbjUOSDpu5XFdGfm1ULAIZsgPI
+[videos] Pré-processamento de dados II: https://www.youtube.com/playlist?list=PL2t5OdGxbjUMORLj9Zd1JsRm45PG6uIbL
