@@ -1,0 +1,144 @@
+Pre-precossamento:
+
+- Adequar os dados para algoritmos que pretendo usar
+ - Ex: normalizar para classificadores / regressão linear
+
+VER tarefas mais comuns
+ - Amostragem de dados: visa tratar desbalanceamento de classes
+  
+
+Limpeza de dados:
+    - opções
+        - Eliminar
+            - Vou perder instancias (ruim se tem poucas instancias)
+        - Atribuir valor padrão
+            - Introduz valor artificial (ruim se acontecer muito)
+        - Metodologia ou heurística de correção
+            - Criar um classificador ou regressor indutor
+                - Tentar inferir valor faltando (classe alvo temporaria) usando os outros atributos como base
+        - Billing: truncar em um range, depois substituir por uma media
+        
+
+Dados inconsistentes
+
+Redundancias
+    - redução manual de instancias
+    - redução de atributos usando tecnicas de redução de dimensionalidade
+
+
+Transformação
+    - Normalização
+        - Atributos numéricos variem na mesma escala
+            - min max
+            - z-score: média desvio padrão
+            - Algoritmos invariante a normalização: arvore de decisão
+    - Conversão
+        - Conversão de categórico -> numérico = codificação
+            - Estado civil -> casado = 0; solteiro = 1
+                - prestar atenção se tem relação ordinal (tem ordem) ou nominal (não tem ordem)
+                    para nominal = one hot encoding
+        - Conversão de numérico para categórico = discretização
+            - larguras iguais: 
+                - problema: alguns intervalos com muitas instancias, outras com poucas. Pode haver desequilibrio se tiver muitos valores nos extremos.
+            - frequencias iguais: 
+
+
+Amostragem:
+    Desbalanceamento de dados
+    - Aumentar classe minoritaria
+        - Oversampling
+            - Tendencia a overfitting
+    - Diminuir classe majoritaria
+        - Undersampling        
+            - Perde muitas instancias
+        
+    Se possível priorizar undersampling 
+
+    SOMTE: Cria instancias sinteticas a partir da classe minoritaria
+        - Bom se antes fizer undersampling
+        - Não gera valor se tiver sobreposição
+    
+
+Quando normalizar para treino / teste ?
+    Usar cenario 3
+        - Normalização é realizada separadamente por split (train, validation, test, k-fold)
+        
+
+Redução de dimensionalidade
+    Caso real: muitos atributos
+    Por que é um problema?
+        Algoritmos ML são estatísticos por natureza (probabilidade, predizer)
+            São influenciados pela posição das instâncias
+            Quanto mais atribuitos, mais dimensões, menos amostras na "mesma vizinhança"
+        Dado um numero fixo de instâncias. Quanto mais dimensões adicionamos ao problema, as instâncias vão se dispersando pelo espaço de entrada. Isso dificulta a predição pela falta de exemplos semelhantes. (Maldição da dimensionalidade)
+
+    Estrategias:
+    Seleção de atributos
+        - Descartar atributos originais não relevantes.
+    Extração de atributos: Agregação:
+        - Crio uma nova dimenção (atributo) a partir de outras existentes (map reduce)
+        - Funções lineares
+        - PCA: Principal Component Analysis
+            - PCA1 Procura dimenções com MAIOR VARIANCIA
+            - PCA2 Procura segunda MAIOR VARIANCIA e assim adiante
+            - Por que maximizar variancia?
+                - Minimizar distancia entre ponto original e ponto de dispersao
+        - Possibilidade aplicação PCA:
+            - Visualizar dados de entrada (se existir agrupamento no ponto de vista de cluster)
+            - Embora não seja um metodo de agrupamento, pode explicar agrupamento e outliers
+        - Quantos componentes PCA usar?
+            - Opção 1 Usar mesma estratégia do KNN
+            - Opção 2: Plot cumulativo
+
+
+    Seleção de atributos (Feature Selection)
+        Visa descartar atributos irrelevantes. Remover "Menos é mais".
+            - Mantenho os atributos originais, mas um subconjunto menor deles.
+            - Lida com a "maldição da dimensionalidade". Diminui overfitting.
+        Diferença entre agregação e seleção
+            A dimenção de atributos é a mesma. Porém em menor número.
+            Identifica os atributos mais relevantes. Foca no que é relevante
+
+        Técnica seleção com base em filtro
+            - Selecionar atributos com mair poder preditivo
+            - Define um score / peso por atributo. Reflete a importancia
+            - Métrica exemplo: correlação de Pearson, Índice Gini)
+            - Dificuldade: quantos atributos selecionar? Quem são otimos?
+            - Vantagem: Agnostico ao algoritmo / modelo
+            - Desvantagem: Não lida bem com multicolinearidade (relacionamento entre atributos. ex: custo por produto, número de produtos vendido, custo total). Cada atributo avaliado individualmente
+            - Desvantagem: Justificar geração de subconjnto
+
+        Técnica seleção com base em wrapper
+            - Seleção é tratada como problema de busca.
+            - Splita-se os atributos em conjutos, posteriormente avaliados e comparados
+            - Objetivo: escolher subconjunto que maximizar desempenho, reduzindo atributos (complexidade)
+                - Queremos minimizar tamanho de atributos
+            -Principais algoritmos:
+                - exponenciais: cresce exponencial conforme dimenção espaço de busca
+                    - Exaustive search, beam search
+                - Sequenciais: Add / Remove atribuos. Simples, mas tende a ficar preso em ótimo local
+                    - Restricted forward selection (RFE), sequential forward selection (SFS), sequential backward selection (SBS).
+                - randomizados: Incorporam aleatoriedade no processo de busca.
+                    -  Simulated anneling, Genetic algorithm, particle swarm optimization.
+            
+            Focar nos sequencias na disciplina.
+            Restricted forward selection (RFE): Ordena atributos e seleciona os top-k
+                - Limitação: não avalia outras configurações para o mesmo tamanho (ótimo local)
+            sequential forward selection (SFS) e sequential backward selection (SBS): Iterativamente adiciona um atributo:
+                - Tenta capturar relação os atributos
+                - Estrategia gulosa
+            Sequential floating forward / backward selection (SFFS e SFBS)
+                - Extensão do RFE e SFS.
+                - Permite revisar se as escolhas foram boas. O espaço de busca cresce exponencialmente.
+                - Não é viável explorar todas as possibilidades
+                - Considera interação entre atributos muito mais forte que os demais
+                - Muito custoso em dataset de alta dimensionalidade
+        
+        Técnica seleção Embutida (Embedded)
+        
+
+
+        
+        
+
+    
