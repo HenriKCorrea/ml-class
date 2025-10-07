@@ -1,7 +1,13 @@
 name: ml-class
 channels:
+  - conda-forge
   - defaults
 dependencies:
   - python=3.13.7
   - pip=25.2
   - ipykernel=6.30.1
+  - scikit-learn=1.7.1
+  - pandas=2.3.2
+  - seaborn=0.13.2
+  - matplotlib=3.10.6
+  - numpy=2.3.2
