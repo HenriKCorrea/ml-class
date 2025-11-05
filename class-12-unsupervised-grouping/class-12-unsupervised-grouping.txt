@@ -1,0 +1,2 @@
+[vídeos] Análise de agrupamentos com k-means: https://www.youtube.com/playlist?list=PL2t5OdGxbjUNINyfL7MPRmf8XiMNSlCG1
+[vídeos] Análise de agrupamentos com clustering hierárquico: https://www.youtube.com/playlist?list=PL2t5OdGxbjUNPRKzJo2mZtSApG2m9D9S9
